@@ -1,0 +1,95 @@
+.Home {
+  background-color: #ffdcd9;
+  color: #ffdcd9;
+  text-align: center;
+  background-size: cover;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.Navbar {
+  background-color: #ffb9b3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 1%;
+}
+
+.containerNewUsePage {
+  background-color: #ffb9b3;
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #bfffb3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.new-userText {
+  color: #1c1c1c;
+  text-shadow: 0px 0px 2px white;
+  padding-top: 0;
+  text-decoration: underline;
+  margin-bottom: -30px;
+}
+
+.Text {
+  color: #1c1c1c;
+  padding-bottom: 5%;
+  margin: -1%;
+}
+
+.inputUser[type="text"] {
+  width: 90%;
+  max-width: 300px;
+  padding: 8px;
+  border: 1px solid #1c1c1c;
+  border-radius: 4px;
+  margin-bottom: 3%;
+  align-self: center;
+}
+
+.buttonHome {
+  background-color: #bfffb3;
+  color: white;
+  padding: 1%;
+  border-color: white;
+  border-radius: 4px;
+  margin-left: 1%;
+}
+
+.buttonReturn {
+  background-color: #bfffb3;
+  color: white;
+  padding: 1%;
+  border-color: white;
+  border-radius: 4px;
+  margin-left: 1%;
+}
+
+.buttonUsers {
+  background-color: #bfffb3;
+  color: white;
+  padding: 1%;
+  border-color: white;
+  border-radius: 4px;
+  margin-left: 1%;
+}
+
+.buttonSaveUser {
+  background-color: #bfffb3;
+  color: white;
+  border-radius: 5%;
+  border-color: white;
+  padding: 1%;
+  border-radius: 4px;
+  margin-left: 1%;
+}
