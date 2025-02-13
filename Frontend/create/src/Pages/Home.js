@@ -30,7 +30,7 @@ const HomePage = () => {
     { field: "title", headerName: "Book title" },
     { field: "author", headerName: "Author" },
     { field: "borrowDate", headerName: "Borrowed date" },
-    { field: "customerID", headerName: "Customer ID" },
+    { field: "customerName", headerName: "Customer's name" },
     { field: "returnDate", headerName: "Last return date" },
   ]);
 
@@ -147,7 +147,7 @@ const HomePage = () => {
                 placeholder="Enter book title"
                 className="inputField"
               />
-              <button className="buttonReturn">
+              <button className="buttonBorrow">
                 <span className="textButton">Return</span>
               </button>
             </div>

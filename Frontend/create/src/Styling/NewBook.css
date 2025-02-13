@@ -17,20 +17,20 @@
 
 .containerNewUsePage {
   background-color: #ffb9b3;
-  width: 80%;
-  max-width: 800px;
-  height: auto;
+  width: 70%;
+  height: 65%;
+  margin: 0 auto;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   border: 1px solid #bfffb3;
+  padding: 20px;
   text-align: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .containerLight {
@@ -43,12 +43,28 @@
   justify-content: center;
 }
 
+.containerGenres {
+  margin-top: 14.5%;
+  background-color: white;
+  width: 33%;
+  height: 7%;
+  align-items: center;
+  align-content: center;
+  color: #808080;
+  font-size: smaller;
+  padding-top: 1%;
+  padding-bottom: -1%;
+  box-shadow: none;
+  border-radius: 4px;
+  border: 1px solid #1c1c1c;
+}
+
 .new-userText {
   color: #1c1c1c;
   text-shadow: 0px 0px 2px white;
   padding-top: 0;
   text-decoration: underline;
-  margin-bottom: -30px;
+  margin-top: -2%;
 }
 
 .Text {
@@ -76,7 +92,7 @@
   cursor: pointer;
   font-size: 16px;
   align-items: center;
-  margin-top: 0%;
+  margin-top: 10%;
   margin-left: 40%;
   padding: 3%;
 }
@@ -115,4 +131,10 @@
   border-color: white;
   border-radius: 4px;
   margin-left: 1%;
+}
+.checkbox {
+  color: #1c1c1c;
+  padding-bottom: 5%;
+  margin: -1%;
+  background-color: #bfffb3;
 }
