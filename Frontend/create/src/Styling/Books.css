@@ -57,39 +57,19 @@
   align-self: center;
 }
 
-.buttonHome {
-  background-color: #bfffb3;
-  color: white;
-  padding: 1%;
-  border-color: white;
+select {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
   border-radius: 4px;
-  margin-left: 1%;
+  background-color: #f1f1f1;
 }
 
-.buttonReturn {
+.buttonNav {
   background-color: #bfffb3;
   color: white;
   padding: 1%;
   border-color: white;
-  border-radius: 4px;
-  margin-left: 1%;
-}
-
-.buttonUsers {
-  background-color: #bfffb3;
-  color: white;
-  padding: 1%;
-  border-color: white;
-  border-radius: 4px;
-  margin-left: 1%;
-}
-
-.buttonSaveUser {
-  background-color: #bfffb3;
-  color: white;
-  border-radius: 5%;
-  border-color: white;
-  padding: 1%;
   border-radius: 4px;
   margin-left: 1%;
 }
