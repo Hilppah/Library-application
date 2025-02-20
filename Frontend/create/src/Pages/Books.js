@@ -76,6 +76,13 @@ const BookPage = () => {
         </Navbar.Brand>
       </Navbar>
       <div className="container">
+        <input
+          className="inputSearch"
+          type="text"
+          id="SearchInput"
+          name="SearchInput"
+          placeholder="Search..."
+        />
         <div
           className="ag-theme-balham"
           style={{
