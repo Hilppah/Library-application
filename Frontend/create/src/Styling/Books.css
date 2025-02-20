@@ -73,3 +73,14 @@ select {
   border-radius: 4px;
   margin-left: 1%;
 }
+
+.inputSearch[type="text"],
+select {
+  width: 20%;
+  padding: 8px;
+  border: 1px solid #1c1c1c;
+  border-radius: 4px;
+  box-sizing: border-box;
+  left: 72%;
+  position: absolute;
+}
