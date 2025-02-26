@@ -1,73 +1,73 @@
-import "../Styling/NewUser.css";
+import styles from "../Styling/NewUser.module.css";
 import { Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NewUserPage = () => {
   return (
-    <div className="Home">
-      <Navbar className="Navbar">
+    <div className={styles.Home}>
+      <Navbar className={styles.Navbar}>
         <Navbar.Brand href="#home">
           <Link to="/">
-            <button className="buttonHome">
-              <span className="textButton">Home</span>
+            <button className={styles.navButton}>
+              <span className={styles.textButton}>Home</span>
             </button>
           </Link>
           <Link to="/books">
-            <button className="buttonBooks">
-              <span className="textButton">Books</span>
+            <button className={styles.navButton}>
+              <span className={styles.textButton}>Books</span>
             </button>
           </Link>
           <Link to="/new-book">
-            <button className="buttonReturn">
-              <span className="textButton">Add a new book</span>
+            <button className={styles.navButton}>
+              <span className={styles.textButton}>Add a new book</span>
             </button>
           </Link>
           <Link to="/users">
-            <button className="buttonUsers">
-              <span className="textButton">Users</span>
+            <button className={styles.navButton}>
+              <span className={styles.textButton}>Users</span>
             </button>
           </Link>
         </Navbar.Brand>
       </Navbar>
 
-      <div className="containerNewUsePage">
-        <div className="containerLight">
-          <h3 className="new-userText">Create a new user</h3>
-          <div className="inputGroup">
-            <label htmlFor="customerName" className="Text">
+      <div className={styles.container}>
+        <div className={styles.containerLight}>
+          <h3 className={styles.userText}>Create a new user</h3>
+          <div className={styles.inputGroup}>
+            <label htmlFor="customerName" className={styles.Text}>
               Customer's name:
             </label>
             <input
-              className="inputUser"
+              className={styles.inputUser}
               type="text"
               id="name"
               name="customerName"
               placeholder="Enter customer's name"
             />
-            <label htmlFor="customerEmail" className="Text">
+            <label htmlFor="customerEmail" className={styles.Text}>
               Customer's email:
             </label>
             <input
-              className="inputUser"
+              className={styles.inputUser}
               type="text"
               id="email"
               name="email"
               placeholder="Enter customer's email"
             />
-            <label htmlFor="customerNumber" className="Text">
+            <label htmlFor="customerNumber" className={styles.Text}>
               Customer's phone number:
             </label>
             <input
-              className="inputUser"
+              className={styles.inputUser}
               type="text"
               id="phone"
               name="customerNumber"
               placeholder="Enter customer's phone number"
             />
           </div>
-          <div className="inputGroup">
-            <button className="buttonSave">
-              <span className="textButton">Save</span>
+          <div className={styles.inputGroup}>
+            <button className={styles.buttonSave}>
+              <span className={styles.textButton}>Save</span>
             </button>
           </div>
         </div>

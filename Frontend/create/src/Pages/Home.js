@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Styling/Home.css";
+import styles from "../Styling/Home.module.css";
 import Navbar from "react-bootstrap/Navbar";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -42,35 +42,35 @@ const HomePage = () => {
   };
 
   return (
-    <div className="Home">
-      <Navbar className="Navbar">
+    <div className={styles.Home}>
+      <Navbar className={styles.Navbar}>
         <Navbar.Brand href="#home">
           <Link to="/Books">
-            <button className="buttonNav">
-              <span className="textButton">Books</span>
+            <button className={styles.buttonNav}>
+              <span className={styles.textButton}>Books</span>
             </button>
           </Link>
           <Link to="/new-book">
-            <button className="buttonNav">
-              <span className="textButton">Add a new book</span>
+            <button className={styles.buttonNav}>
+              <span className={styles.textButton}>Add a new book</span>
             </button>
           </Link>
           <Link to="/users">
-            <button className="buttonNav">
-              <span className="textButton">Users</span>
+            <button className={styles.buttonNav}>
+              <span className={styles.textButton}>Users</span>
             </button>
           </Link>
           <Link to="/new-user">
-            <button className="buttonNav">
-              <span className="textButton">Save a new user</span>
+            <button className={styles.buttonNav}>
+              <span className={styles.textButton}>Save a new user</span>
             </button>
           </Link>
         </Navbar.Brand>
       </Navbar>
 
-      <div className="container">
-        <div className="Left">
-          <h2 className="h2">Most recently borrowed books</h2>
+      <div className={styles.container}>
+        <div className={styles.Left}>
+          <h2 className={styles.h2}>Most recently borrowed books</h2>
           <div
             className="ag-theme-balham"
             style={{
@@ -88,12 +88,15 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="Right">
-          <section className="containerBorrow">
-            <h3 className="h3">Borrow a Book</h3>
+        <div className={styles.Right}>
+          <section className={styles.containerBorrow}>
+            <h3 className={styles.h3}>Borrow a Book</h3>
             <form>
-              <div className="inputGroup">
-                <label htmlFor="borrowNameInput" className="borrowReturnText">
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="styles.borrowNameInput"
+                  className={styles.borrowReturnText}
+                >
                   Customers email:
                 </label>
                 <input
@@ -101,11 +104,14 @@ const HomePage = () => {
                   id="borrowNameInput"
                   name="borrowNameInput"
                   placeholder="Enter customer's email"
-                  className="inputField"
+                  className={styles.inputField}
                 />
               </div>
-              <div className="inputGroup">
-                <label htmlFor="borrowBookInput" className="borrowReturnText">
+              <div className={styles.inputGroup}>
+                <label
+                  htmlFor="borrowBookInput"
+                  className={styles.borrowReturnText}
+                >
                   Book Title:
                 </label>
                 <input
@@ -113,19 +119,19 @@ const HomePage = () => {
                   id="borrowBookInput"
                   name="borrowBookInput"
                   placeholder="Enter book title"
-                  className="inputField"
+                  className={styles.inputField}
                 />
-                <button type="submit" className="buttonBorrow">
-                  <span className="textButton">Borrow</span>
+                <button type="submit" className={styles.buttonBorrow}>
+                  <span className={styles.textButton}>Borrow</span>
                 </button>
               </div>
             </form>
           </section>
 
-          <section className="containerReturn">
-            <h3 className="h3">Return a Book</h3>
-            <div className="inputGroup">
-              <label htmlFor="nameInput" className="borrowReturnText">
+          <section className={styles.containerReturn}>
+            <h3 className={styles.h3}>Return a Book</h3>
+            <div className={styles.inputGroup}>
+              <label htmlFor="nameInput" className={styles.borrowReturnText}>
                 Customers email:
               </label>
               <input
@@ -133,11 +139,11 @@ const HomePage = () => {
                 id="nameInput"
                 name="nameInput"
                 placeholder="Enter customers email"
-                className="inputField"
+                className={styles.inputField}
               />
             </div>
-            <div className="inputGroup">
-              <label htmlFor="bookInput" className="borrowReturnText">
+            <div className={styles.inputGroup}>
+              <label htmlFor="bookInput" className={styles.borrowReturnText}>
                 Book Title:
               </label>
               <input
@@ -145,10 +151,10 @@ const HomePage = () => {
                 id="bookInput"
                 name="bookInput"
                 placeholder="Enter book title"
-                className="inputField"
+                className={styles.inputField}
               />
-              <button className="buttonBorrow">
-                <span className="textButton">Return</span>
+              <button className={styles.buttonBorrow}>
+                <span className={styles.textButton}>Return</span>
               </button>
             </div>
           </section>

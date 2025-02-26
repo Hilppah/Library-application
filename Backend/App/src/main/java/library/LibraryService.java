@@ -14,16 +14,16 @@ public class LibraryService {
     private BookRepository bookRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     public String rentBook(String customerId, String bookId) {
         Optional<LibraryBook> libraryBook = bookRepository.findBookById(bookId);
-        Optional<Customer> customerOpt = customerRepository.findById(customerId);
+        Optional<User> userOptional = userRepository.findById(customerId);
 
         if (libraryBook.isEmpty()) {
             return "The book is unavailable";
         }
-        if (customerOpt.isEmpty()) {
+        if (userOptional.isEmpty()) {
             return "Customer can't be found";
         }
 
@@ -34,14 +34,14 @@ public class LibraryService {
         book.setAvailable(false);
         bookRepository.save(book);
 
-        Customer customer = customerOpt.get();
+        User user = userOptional.get();
         RentedBook rentedBook = new RentedBook();
         rentedBook.setBookId(book.getId());
         rentedBook.setRentedDate(LocalDate.now());
         rentedBook.setDueDate(LocalDate.now().plusDays(14));
 
-        customer.getRentedBooks().add(rentedBook);
-        customerRepository.save(customer);
+        user.getRentedBooks().add(rentedBook);
+        userRepository.save(user);
 
         return "Book borrowed successfully";
     }
@@ -50,17 +50,17 @@ public class LibraryService {
         return bookRepository.findAll();
     }
 
+    public List<User> findUsers(){
+        return userRepository.findAll();
+    }
+
     public List<LibraryBook> findRentedBooks(){
     return bookRepository.findByAvailableTrue();
     }
 
-//    public String getCustomerByID(String CustomerId){
+//    public String getUserByID(String CustomerId){
 //
-//        Optional<Customer> customer = customerRepository.findCustomerById(CustomerId);
-//        return customer;
+//        Optional<User> user = userRepository.findUserById(CustomerId);
+//        return user;
 //    }
-
-    public List<Customer> findCustomers(){
-        return customerRepository.findAll();
-    }
 }
