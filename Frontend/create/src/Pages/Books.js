@@ -15,15 +15,15 @@ const BookPage = () => {
   useEffect(() => {
     fetch("http://localhost:8080/library/books")
       .then((response) => response.json())
-      .then((data) => {
-        setRowData(data);
-      })
+      .then((data) => {setRowData(data)})
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
 
   const [colDefs] = useState([
     { field: "title", headerName: "Book Title", sortable: true, filter: true },
     { field: "author", headerName: "Author", sortable: true, filter: true },
+    { field: "genre", headerName: "Genre", sortable: true, filter: true },
+    { field: "year", headerName: "Publication year", sortable: true, filter: true },
     {
       field: "available",
       headerName: "Available",

@@ -1,4 +1,4 @@
-package library.utilities;
+package library.collections;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +10,8 @@ public class LibraryBook {
     private String title;
     private String author;
     private boolean available = true;
+    private User user;
+
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -22,4 +24,7 @@ public class LibraryBook {
 
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
+
+    public User getRenter() { return user; }
+    public void setRenter(User user) { this.user = user; }
 }

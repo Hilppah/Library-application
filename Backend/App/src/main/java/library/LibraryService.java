@@ -1,11 +1,15 @@
 package library;
 
+import library.collections.LibraryBook;
+import library.collections.RentedBook;
+import library.collections.User;
 import library.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
@@ -17,7 +21,7 @@ public class LibraryService {
     private UserRepository userRepository;
 
     public String rentBook(String customerId, String bookId) {
-        Optional<LibraryBook> libraryBook = bookRepository.findBookById(bookId);
+        Optional<LibraryBook> libraryBook = bookRepository.findById(bookId);
         Optional<User> userOptional = userRepository.findById(customerId);
 
         if (libraryBook.isEmpty()) {
@@ -31,12 +35,14 @@ public class LibraryService {
         if (!book.isAvailable()) {
             return "The book has already been borrowed";
         }
+
         book.setAvailable(false);
         bookRepository.save(book);
 
         User user = userOptional.get();
         RentedBook rentedBook = new RentedBook();
         rentedBook.setBookId(book.getId());
+        rentedBook.setTitle(book.getTitle());  // Store book title for reference
         rentedBook.setRentedDate(LocalDate.now());
         rentedBook.setDueDate(LocalDate.now().plusDays(14));
 
@@ -46,21 +52,29 @@ public class LibraryService {
         return "Book borrowed successfully";
     }
 
-    public List<LibraryBook> findBooks(){
+    public List<LibraryBook> findBooks() {
         return bookRepository.findAll();
     }
 
-    public List<User> findUsers(){
+    public List<User> findUsers() {
         return userRepository.findAll();
     }
 
-    public List<LibraryBook> findRentedBooks(){
-    return bookRepository.findByAvailableTrue();
+    public List<LibraryBook> findRentedBooks() {
+        return bookRepository.findByAvailableFalse(); // Fix: Find books that are NOT available
     }
 
-//    public String getUserByID(String CustomerId){
-//
-//        Optional<User> user = userRepository.findUserById(CustomerId);
-//        return user;
-//    }
+    public List<RentedBook> findRentersOfBooks() {
+        return userRepository.findAll().stream()
+                .flatMap(user -> user.getRentedBooks().stream()
+                        .map(rentedBook -> {
+                            rentedBook.setRenterName(user.getName()); // Store renter info
+                            return rentedBook;
+                        })
+                ).collect(Collectors.toList());
+    }
+
+    public Optional<User> getUserByID(String customerId) {
+        return userRepository.findById(customerId);
+    }
 }

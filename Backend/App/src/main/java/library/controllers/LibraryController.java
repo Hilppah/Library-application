@@ -1,7 +1,8 @@
 package library.controllers;
 
 import library.LibraryService;
-import library.utilities.LibraryBook;
+import library.collections.LibraryBook;
+import library.collections.RentedBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,4 +30,10 @@ public class LibraryController {
             return libraryService.findBooks();
         }
     }
+
+    @GetMapping("/rentedBooks")
+    public List<RentedBook> getRentedBooks (){
+        return libraryService.findRentersOfBooks();
+    }
+
 }

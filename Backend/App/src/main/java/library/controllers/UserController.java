@@ -1,7 +1,7 @@
 package library.controllers;
 
 import library.LibraryService;
-import library.utilities.User;
+import library.collections.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

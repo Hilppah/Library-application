@@ -1,6 +1,7 @@
 package library.utilities;
 
 
+import library.collections.LibraryBook;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface BookRepository extends MongoRepository<LibraryBook, String> {
     List<LibraryBook> findAll();
 
     List<LibraryBook> findByAvailableTrue();
+
+    List<LibraryBook> findByAvailableFalse();
 }

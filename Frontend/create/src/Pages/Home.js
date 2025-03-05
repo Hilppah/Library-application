@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../Styling/Home.module.css";
 import Navbar from "react-bootstrap/Navbar";
 import { AgGridReact } from "ag-grid-react";
@@ -11,27 +11,36 @@ import { Link } from "react-router-dom";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const HomePage = () => {
-  const [rowData, setRowData] = useState([
-    {
-      title: "Tuntematon Sotilas",
-      author: "Väinö Linna",
-    },
-    {
-      title: "Sinuhe egyptiläinen",
-      author: "Mika Waltari",
-    },
-    {
-      title: "Pohjantähti",
-      author: "Antti Tuuri",
-    },
-  ]);
+  const [rowData, setRowData] = useState([]);
 
-  const [colDefs, setColDefs] = useState([
-    { field: "title", headerName: "Book title" },
-    { field: "author", headerName: "Author" },
-    { field: "borrowDate", headerName: "Borrowed date" },
-    { field: "customerName", headerName: "Customer's name" },
-    { field: "returnDate", headerName: "Last return date" },
+  useEffect(() => {
+    fetch("http://localhost:8080/library/")
+      .then((response) => response.json())
+      .then((data) => setRowData(data))
+      .catch((error) => console.error("Error fetching users:", error));
+  }, []);
+
+  const [colDefs] = useState([
+    { field: "title", headerName: "Title", sortable: true, filter: true },
+    { field: "author", headerName: "Author", sortable: true, filter: true },
+    {
+      field: "borrowDate",
+      headerName: "Borrowed date",
+      sortable: true,
+      filter: true,
+    },
+    {
+      field: "customerName",
+      headerName: "Customer's name",
+      sortable: true,
+      filter: true,
+    },
+    {
+      field: "returnDate",
+      headerName: "Last return date",
+      sortable: true,
+      filter: true,
+    },
   ]);
 
   const defaultColDef = {
