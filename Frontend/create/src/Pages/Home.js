@@ -14,9 +14,17 @@ const HomePage = () => {
   const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/library/")
+    fetch("http://localhost:8080/library/rentedBooks")
       .then((response) => response.json())
-      .then((data) => setRowData(data))
+      .then((data) => {
+        const formattedData = data.map((item) => ({
+          title: item.title,
+          rentedDate: item.rentedDate,
+          dueDate: item.dueDate,
+          renterName: item.renterName,
+        }));
+        setRowData(formattedData);
+      })
       .catch((error) => console.error("Error fetching users:", error));
   }, []);
 
@@ -24,20 +32,20 @@ const HomePage = () => {
     { field: "title", headerName: "Title", sortable: true, filter: true },
     { field: "author", headerName: "Author", sortable: true, filter: true },
     {
-      field: "borrowDate",
+      field: "rentedDate",
       headerName: "Borrowed date",
       sortable: true,
       filter: true,
     },
     {
-      field: "customerName",
+      field: "renterName",
       headerName: "Customer's name",
       sortable: true,
       filter: true,
     },
     {
-      field: "returnDate",
-      headerName: "Last return date",
+      field: "dueDate",
+      headerName: "Due date",
       sortable: true,
       filter: true,
     },
