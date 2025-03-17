@@ -42,7 +42,7 @@ public class LibraryService {
         User user = userOptional.get();
         RentedBook rentedBook = new RentedBook();
         rentedBook.setBookId(book.getId());
-        rentedBook.setTitle(book.getTitle());  // Store book title for reference
+        rentedBook.setTitle(book.getTitle());
         rentedBook.setRentedDate(LocalDate.now());
         rentedBook.setDueDate(LocalDate.now().plusDays(14));
 
@@ -61,14 +61,14 @@ public class LibraryService {
     }
 
     public List<LibraryBook> findRentedBooks() {
-        return bookRepository.findByAvailableFalse(); // Fix: Find books that are NOT available
+        return bookRepository.findByAvailableFalse();
     }
 
     public List<RentedBook> findRentersOfBooks() {
         return userRepository.findAll().stream()
                 .flatMap(user -> user.getRentedBooks().stream()
                         .map(rentedBook -> {
-                            rentedBook.setRenterName(user.getName()); // Store renter info
+                            rentedBook.setRenterName(user.getName());
                             return rentedBook;
                         })
                 ).collect(Collectors.toList());
