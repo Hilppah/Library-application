@@ -34,3 +34,5 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 .idea
+.idea/misc.xml
+.idea/vcs.xml
