@@ -12,6 +12,11 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const HomePage = () => {
   const [rowData, setRowData] = useState([]);
+  const [email, setEmail] = useState("");
+  const [book, setBook] = useState({
+    borrowBookInput: "",
+    isRented: false,
+  });
 
   useEffect(() => {
     fetch("http://localhost:8080/library/rentedBooks")
@@ -56,6 +61,41 @@ const HomePage = () => {
     sortable: true,
     filter: true,
     resizable: true,
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "borrowNameInput") {
+      setEmail(value);
+    } else if (name === "borrowBookInput") {
+      setBook((prevBook) => ({ ...prevBook, borrowBookInput: value }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8080/library/rent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customerId: email,
+          bookId: book.borrowBookInput,
+        }),
+      });
+      console.log("Response:", response);
+      if (!response.ok) {
+        throw new Error("Failed to borrow book");
+      }
+
+      alert("Book borrowed successfully!");
+      setBook({ ...book, isRented: true });
+    } catch (error) {
+      console.error("Error renting book:", error);
+    }
   };
 
   return (
@@ -108,7 +148,7 @@ const HomePage = () => {
         <div className={styles.Right}>
           <section className={styles.containerBorrow}>
             <h3 className={styles.h3}>Borrow a Book</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className={styles.inputGroup}>
                 <label
                   htmlFor="styles.borrowNameInput"
@@ -122,6 +162,8 @@ const HomePage = () => {
                   name="borrowNameInput"
                   placeholder="Enter customer's email"
                   className={styles.inputField}
+                  value={email}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className={styles.inputGroup}>
@@ -137,6 +179,8 @@ const HomePage = () => {
                   name="borrowBookInput"
                   placeholder="Enter book title"
                   className={styles.inputField}
+                  value={book.borrowBookInput}
+                  onChange={handleInputChange}
                 />
                 <button type="submit" className={styles.buttonBorrow}>
                   <span className={styles.textButton}>Borrow</span>
@@ -144,36 +188,37 @@ const HomePage = () => {
               </div>
             </form>
           </section>
-
           <section className={styles.containerReturn}>
             <h3 className={styles.h3}>Return a Book</h3>
-            <div className={styles.inputGroup}>
-              <label htmlFor="nameInput" className={styles.borrowReturnText}>
-                Customers email:
-              </label>
-              <input
-                type="text"
-                id="nameInput"
-                name="nameInput"
-                placeholder="Enter customers email"
-                className={styles.inputField}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="bookInput" className={styles.borrowReturnText}>
-                Book Title:
-              </label>
-              <input
-                type="text"
-                id="bookInput"
-                name="bookInput"
-                placeholder="Enter book title"
-                className={styles.inputField}
-              />
-              <button className={styles.buttonBorrow}>
-                <span className={styles.textButton}>Return</span>
-              </button>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="nameInput" className={styles.borrowReturnText}>
+                  Customers email:
+                </label>
+                <input
+                  type="text"
+                  id="nameInput"
+                  name="nameInput"
+                  placeholder="Enter customers email"
+                  className={styles.inputField}
+                />
+              </div>
+              <div className={styles.inputGroup}>
+                <label htmlFor="bookInput" className={styles.borrowReturnText}>
+                  Book Title:
+                </label>
+                <input
+                  type="text"
+                  id="bookInput"
+                  name="bookInput"
+                  placeholder="Enter book title"
+                  className={styles.inputField}
+                />
+                <button type="submit" className={styles.buttonBorrow}>
+                  <span className={styles.textButton}>Return</span>
+                </button>
+              </div>
+            </form>
           </section>
         </div>
       </div>

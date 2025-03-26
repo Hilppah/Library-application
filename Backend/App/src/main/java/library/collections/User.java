@@ -13,6 +13,7 @@ public class User {
     private String name;
     private String email;
     private List<RentedBook> rentedBooks = new ArrayList<>();
+    private String number;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -22,6 +23,9 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getNumber() { return number; }
+    public void setNumber(String number) { this.number = number; }
 
     public List<RentedBook> getRentedBooks() { return rentedBooks; }
     public void setRentedBooks(List<RentedBook> rentedBooks) { this.rentedBooks = rentedBooks; }
