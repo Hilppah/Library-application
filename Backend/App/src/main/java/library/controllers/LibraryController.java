@@ -29,8 +29,7 @@ public class LibraryController {
         System.out.println(available);
         if (available) {
             return libraryService.findRentedBooks();
-        }
-        else {
+        } else {
             return bookRepository.findAll();
         }
     }
@@ -44,6 +43,11 @@ public class LibraryController {
     @GetMapping("/rentedBooks")
     public List<RentedBook> getRentedBooks (){
         return libraryService.findRentersOfBooks();
+    }
+
+    @GetMapping("/availableBooks")
+    public List<LibraryBook> availableBooks(){
+        return libraryService.findAvailableBooks();
     }
 
 }

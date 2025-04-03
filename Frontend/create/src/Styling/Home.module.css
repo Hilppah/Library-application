@@ -36,18 +36,20 @@
 .Right {
   float: right;
   width: 30%;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .containerBorrow {
   background-color: #fff6f5;
   width: 20%;
-  height: 30%;
+  height: 35%;
   margin: 0 auto;
   position: absolute;
-  top: 10%;
+  top: 5%;
   right: 5%;
   border: 1px solid #1c1c1c;
   padding: 20px;
@@ -57,10 +59,10 @@
 .containerReturn {
   background-color: #fff6f5;
   width: 20%;
-  height: 30%;
+  height: 35%;
   margin: 0 auto;
   position: absolute;
-  top: 55%;
+  top: 50%;
   right: 5%;
   border: 1px solid #1c1c1c;
   padding: 20px;
@@ -120,8 +122,9 @@
 .borrowReturnText {
   color: #1c1c1c;
   padding-top: 0%;
-  padding-bottom: 3%;
-  margin: -1%;
+  padding-bottom: 5px;
+  display: block;
+  margin: 0;
 }
 
 .textButton {
@@ -173,7 +176,7 @@
   border-radius: 4px;
 }
 
-.inputBook[type="text"],
+.inputField[type="text"],
 select {
   width: 100%;
   padding: 8px;
@@ -187,4 +190,5 @@ select {
   flex-direction: column;
   margin-top: 10%;
   margin-bottom: 10px;
+  align-items: flex-start;
 }
