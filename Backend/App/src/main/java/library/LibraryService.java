@@ -21,6 +21,8 @@ public class LibraryService {
     private UserRepository userRepository;
 
     public String rentBook(String customerId, String bookId) {
+        System.out.println(bookId);
+        System.out.println(customerId);
         Optional<LibraryBook> libraryBook = bookRepository.findById(bookId);
         Optional<User> userOptional = userRepository.findById(customerId);
 
@@ -62,6 +64,10 @@ public class LibraryService {
 
     public List<LibraryBook> findRentedBooks() {
         return bookRepository.findByAvailableFalse();
+    }
+
+    public List<LibraryBook> findAvailableBooks() {
+        return bookRepository.findByAvailableTrue();
     }
 
     public List<RentedBook> findRentersOfBooks() {

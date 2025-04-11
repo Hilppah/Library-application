@@ -32,12 +32,34 @@
   align-items: flex-start;
 }
 
+.suggestions {
+  list-style-type: none;
+  left: 72%;
+  width: 90%;
+  max-width: 220px;
+  position: absolute;
+  margin-top: 3%;
+  padding: 0;
+  background: white;
+  border: 1px solid #1c1c1c;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 10;
+  width: 300px;
+}
+
 .new-userText {
   color: #1c1c1c;
   text-shadow: 0px 0px 2px white;
   padding-top: 0;
   text-decoration: underline;
   margin-bottom: -30px;
+}
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+  color: #1c1c1c;
 }
 
 .Text {
@@ -90,4 +112,8 @@ select {
   border-color: black;
   text-shadow: 0px 0px 2px black;
   font-weight: bold;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
 }
