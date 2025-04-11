@@ -179,14 +179,12 @@ const HomePage = () => {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <div>
-                  <label
-                    htmlFor="borrowBookInput"
-                    className={styles.borrowReturnText}
-                  >
-                    Book Title:
-                  </label>
-                </div>
+                <label
+                  htmlFor="borrowBookInput"
+                  className={styles.borrowReturnText}
+                >
+                  Book Title:
+                </label>
                 <select
                   id="borrowBookInput"
                   name="borrowBookInput"

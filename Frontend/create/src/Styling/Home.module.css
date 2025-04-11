@@ -125,6 +125,7 @@
   padding-bottom: 5px;
   display: block;
   margin: 0;
+  display: block;
 }
 
 .textButton {
@@ -179,7 +180,9 @@
 .inputField[type="text"],
 select {
   width: 100%;
+  min-width: 200px;
   padding: 8px;
+  margin-bottom: 1%;
   border: 1px solid #1c1c1c;
   border-radius: 4px;
   box-sizing: border-box;
@@ -188,7 +191,9 @@ select {
 .inputGroup {
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
-  margin-bottom: 10px;
-  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 4%;
+  align-items: stretch;
+
+  display: block !important;
 }

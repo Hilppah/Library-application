@@ -11,19 +11,33 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const BookPage = () => {
   const [rowData, setRowData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/library/books")
       .then((response) => response.json())
-      .then((data) => {setRowData(data)})
+      .then((data) => setRowData(data))
       .catch((error) => console.error("Error fetching books:", error));
   }, []);
+
+  useEffect(() => {
+    const filtered = rowData.filter((book) =>
+      book.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchTerm, rowData]);
 
   const [colDefs] = useState([
     { field: "title", headerName: "Book Title", sortable: true, filter: true },
     { field: "author", headerName: "Author", sortable: true, filter: true },
     { field: "genre", headerName: "Genre", sortable: true, filter: true },
-    { field: "year", headerName: "Publication year", sortable: true, filter: true },
+    {
+      field: "year",
+      headerName: "Publication year",
+      sortable: true,
+      filter: true,
+    },
     {
       field: "available",
       headerName: "Available",
@@ -69,7 +83,18 @@ const BookPage = () => {
           className={styles.inputSearch}
           type="text"
           placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {searchTerm && (
+          <ul className={styles.suggestions}>
+            {filteredData.slice(0, 5).map((book, index) => (
+              <li key={index} onClick={() => setSearchTerm(book.title)}>
+                {book.title}
+              </li>
+            ))}
+          </ul>
+        )}
         <div
           className="ag-theme-balham"
           style={{
@@ -80,7 +105,7 @@ const BookPage = () => {
           }}
         >
           <AgGridReact
-            rowData={rowData}
+            rowData={filteredData}
             columnDefs={colDefs}
             defaultColDef={defaultColDef}
           />
