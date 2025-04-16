@@ -5,6 +5,7 @@ import library.collections.LibraryBook;
 import library.collections.RentedBook;
 import library.utilities.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,34 +21,37 @@ public class LibraryController {
     public BookRepository bookRepository;
 
     @PostMapping("/rent")
-    public String rentBook(@RequestParam String customerId, @RequestParam String bookId) {
+    public ResponseEntity<?> rentBook(@RequestParam String customerId, @RequestParam String bookId) {
         return libraryService.rentBook(customerId, bookId);
     }
 
     @GetMapping("/books")
-    public List<LibraryBook> getBooks(@RequestParam (required = false, defaultValue = "false") Boolean available) {
+    public ResponseEntity<List<LibraryBook>> getBooks(@RequestParam(required = false) Boolean available) {
         System.out.println(available);
+        if( available==null){
+            return libraryService.findBooks();
+        }
         if (available) {
-            return libraryService.findRentedBooks();
+            return libraryService.findAvailableBooks();
         } else {
-            return bookRepository.findAll();
+            return libraryService.findRentedBooks();
         }
     }
 
     @PostMapping("/books")
-    public LibraryBook addBook(@RequestBody LibraryBook book) {
+    public ResponseEntity<?> addBook(@RequestBody LibraryBook book) {
         System.out.println(book.getTitle());
-        return bookRepository.save(book);
+        return ResponseEntity.status(201).body(bookRepository.save(book));
     }
 
     @GetMapping("/rentedBooks")
-    public List<RentedBook> getRentedBooks (){
+    public ResponseEntity< List<RentedBook>> getRentedBooks (){
         return libraryService.findRentersOfBooks();
     }
 
-    @GetMapping("/availableBooks")
-    public List<LibraryBook> availableBooks(){
-        return libraryService.findAvailableBooks();
+    @PostMapping("/returnBook")
+    public ResponseEntity<?> returnBook (@RequestBody RentedBook book){
+        return libraryService.returnBook(book);
     }
 
 }

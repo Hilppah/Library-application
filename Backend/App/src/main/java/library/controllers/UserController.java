@@ -23,8 +23,8 @@ public class UserController {
     public UserRepository userRepository;
 
     @GetMapping("/users")
-    public List<User> getUsers(){
-        return libraryService.findUsers();
+    public ResponseEntity<List<User>> getUsers(){
+        return ResponseEntity.status(200).body(libraryService.findUsers());
     }
 
     @PostMapping("/users")
