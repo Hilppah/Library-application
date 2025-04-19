@@ -8,6 +8,7 @@ public class RentedBook {
     private LocalDate dueDate;
     private String title;
     private String renterName;
+    private String renterId;
 
 
     public String getBookId() { return bookId; }
@@ -24,4 +25,7 @@ public class RentedBook {
 
     public String getRenterName() { return renterName; }
     public void setRenterName(String renterName) { this.renterName = renterName; }
+
+    public String getRenterId() {return renterId;}
+    public void setRenterId(String renterId) { this.renterId = renterId;}
 }

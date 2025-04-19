@@ -24,6 +24,8 @@ const HomePage = () => {
         const formattedData = data.map((item) => ({
           title: item.title,
           rentedDate: item.rentedDate,
+          renterId: item.renterId,
+          bookId: item.bookId,
           dueDate: item.dueDate,
           renterName: item.renterName,
         }));
@@ -100,13 +102,20 @@ const HomePage = () => {
         { method: "POST" }
       );
 
-      if (!response.ok) throw new Error("Failed to borrow book");
+      const message = await response.text();
 
-      alert("Book borrowed successfully!");
-      setBook({ borrowBookInput: "" });
-      setEmail("");
+      if (response.status === 200) {
+        alert(message);
+        setBook({ borrowBookInput: "" });
+        setEmail("");
+      } else if (response.status === 409) {
+        alert(`Could not borrow book: ${message}`);
+      } else {
+        alert("Conflict");
+      }
     } catch (error) {
       console.error("Error renting book:", error);
+      alert("Error. Failed to rent book.");
     }
   };
 
@@ -188,7 +197,7 @@ const HomePage = () => {
                 <select
                   id="borrowBookInput"
                   name="borrowBookInput"
-                  className={styles.inputField}
+                  className={styles.select}
                   value={book.borrowBookInput}
                   onChange={handleInputChange}
                 >
@@ -199,31 +208,17 @@ const HomePage = () => {
                     </option>
                   ))}
                 </select>
+                <button type="submit" className={styles.buttonBorrow}>
+                  <span className={styles.textButton}>Borrow</span>
+                </button>
               </div>
-              <button type="submit" className={styles.buttonBorrow}>
-                <span className={styles.textButton}>Borrow</span>
-              </button>
             </form>
           </section>
 
           <section className={styles.containerReturn}>
             <h3 className={styles.h3}>Return a Book</h3>
             <form>
-              <div className={styles.inputGroup}>
-                <label
-                  htmlFor="returnEmailInput"
-                  className={styles.borrowReturnText}
-                >
-                  Customer's Email:
-                </label>
-                <input
-                  type="text"
-                  id="returnEmailInput"
-                  name="returnEmailInput"
-                  placeholder="Enter customer's email"
-                  className={styles.inputField}
-                />
-              </div>
+              <div className={styles.inputGroup}></div>
               <div className={styles.inputGroup}>
                 <label
                   htmlFor="returnBookInput"
@@ -231,13 +226,24 @@ const HomePage = () => {
                 >
                   Book Title:
                 </label>
-                <input
-                  type="text"
-                  id="returnBookInput"
-                  name="returnBookInput"
-                  placeholder="Enter book title"
-                  className={styles.inputField}
-                />
+                <select
+                  id="book-select"
+                  value={selectedBook}
+                  onChange={handleChange}
+                >
+                  <option value="">-- Select a book --</option>
+                  {books.map((book) => (
+                    <option key={book.id} value={book.id}>
+                      {book.title}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="returnEmailInput"
+                  className={styles.borrowReturnText}
+                >
+                  Customer's Email:
+                </label>
               </div>
               <button type="submit" className={styles.buttonBorrow}>
                 <span className={styles.textButton}>Return</span>
