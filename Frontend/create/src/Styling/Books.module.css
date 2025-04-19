@@ -78,14 +78,6 @@
   align-self: center;
 }
 
-select {
-  width: 100%;
-  padding: 16px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #f1f1f1;
-}
-
 .buttonNav {
   background-color: #bfffb3;
   color: white;
@@ -95,8 +87,7 @@ select {
   margin-left: 1%;
 }
 
-.inputSearch[type="text"],
-select {
+.inputSearch[type="text"] {
   width: 20%;
   padding: 8px;
   border: 1px solid #1c1c1c;
