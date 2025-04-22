@@ -3,6 +3,8 @@ package library.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "Books")
 public class LibraryBook {
     @Id
@@ -10,7 +12,7 @@ public class LibraryBook {
     private String title;
     private String author;
     private boolean available = true;
-    private String genre;
+    private List<String> genres;
     private String releaseYear;
 
     public String getId() { return id; }
@@ -22,8 +24,8 @@ public class LibraryBook {
     public String getAuthor() { return author; }
     public void setAuthor(String author) { this.author = author; }
 
-    public String getGenre() { return genre; }
-    public void setGenre(String genre) { this.genre = genre; }
+    public List<String> getGenres() { return genres; }
+    public void setGenres(List<String> genres) { this.genres = genres; }
 
     public String getYear() { return releaseYear; }
     public void setYear(String releaseYear) { this.releaseYear = releaseYear; }

@@ -1,9 +1,7 @@
 package library.controllers;
 
 import library.LibraryService;
-import library.collections.LibraryBook;
 import library.collections.User;
-import library.utilities.BookRepository;
 import library.utilities.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +32,7 @@ public class UserController {
             return ResponseEntity.status(409).body("The Email is already in use");
         }
 
-        System.out.println(newUser.getName());
+        System.out.println("Received: " + newUser.getName() + ", " + newUser.getNumber());
         User savedUser = userRepository.save(newUser);
         return ResponseEntity.status(201).body(savedUser);
     }

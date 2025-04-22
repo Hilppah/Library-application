@@ -23,7 +23,7 @@ const UserPage = () => {
     { field: "name", headerName: "Name", sortable: true, filter: true },
     { field: "email", headerName: "Email", sortable: true, filter: true },
     {
-      field: "phoneNumber",
+      field: "number",
       headerName: "Phone Number",
       sortable: true,
       filter: true,

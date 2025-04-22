@@ -5,15 +5,12 @@ import library.collections.RentedBook;
 import library.collections.User;
 import library.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
@@ -103,8 +100,7 @@ public class LibraryService {
         Optional<User> optionalUser = userRepository.findById(rentedBook.getRenterId());
 
         if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(404)
-                    .body("Renter with ID " + rentedBook.getRenterId() + " not found.");
+            return ResponseEntity.status(404).body("Renter with ID " + rentedBook.getRenterId() + " not found.");
         }
 
         User user = optionalUser.get();
@@ -114,8 +110,7 @@ public class LibraryService {
         );
 
         if (!removed) {
-            return ResponseEntity.status(400)
-                    .body("Book was not found in user's rented list.");
+            return ResponseEntity.status(400).body("Book was not found in user's rented list.");
         }
         userRepository.save(user);
         return ResponseEntity.status(200).body("The book has been returned.");

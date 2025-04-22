@@ -17,7 +17,7 @@ const genres = [
 
 const NewBookPage = () => {
   const [year, setYear] = useState("");
-  const [genre, setGenre] = useState(genres[0]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -30,13 +30,20 @@ const NewBookPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newBook = {
+      ...book,
+      year: year,
+      genres: selectedGenres,
+    };
+
     try {
       const response = await fetch("http://localhost:8080/library/books", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...book }),
+        body: JSON.stringify(newBook),
       });
 
       if (!response.ok) {
@@ -45,6 +52,8 @@ const NewBookPage = () => {
 
       alert("Book added successfully!");
       setBook({ title: "", author: "", isRented: false });
+      setYear("");
+      setSelectedGenres([]);
     } catch (error) {
       console.error("Error adding book:", error);
     }
@@ -112,9 +121,12 @@ const NewBookPage = () => {
                 className={styles.inputInfo}
                 type="text"
                 id="year"
-                name="publicationYear"
+                name="year"
                 placeholder="Enter the publication year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
               />
+
               <label className={styles.Text}>Genres:</label>
               <Container className={styles.containerGenres}>
                 <div className={styles.inputGroup}>
@@ -124,7 +136,16 @@ const NewBookPage = () => {
                         <input
                           type="checkbox"
                           value={genre}
-                          onChange={() => setGenre(genre)}
+                          checked={selectedGenres.includes(genre)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedGenres([...selectedGenres, genre]);
+                            } else {
+                              setSelectedGenres(
+                                selectedGenres.filter((g) => g !== genre)
+                              );
+                            }
+                          }}
                         />
                         {genre}
                       </label>

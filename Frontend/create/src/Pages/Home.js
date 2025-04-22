@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../Styling/Home.module.css";
 import Navbar from "react-bootstrap/Navbar";
 import { AgGridReact } from "ag-grid-react";
@@ -12,46 +12,26 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 const HomePage = () => {
   const [rowData, setRowData] = useState([]);
   const [rowData2, setRowData2] = useState([]);
-  const [email, setEmail] = useState("");
+  const [setEmail] = useState("");
   const [book, setBook] = useState({ borrowBookInput: "" });
   const [selectedBook, setSelectedBook] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [customerId, setCustomerId] = useState("");
 
   useEffect(() => {
+    fetchUsers();
     fetchRentedBooks();
     fetchAvailableBooks();
   }, []);
 
-  const [colDefs] = useState([
-    { field: "title", headerName: "Title", sortable: true, filter: true },
-    { field: "author", headerName: "Author", sortable: true, filter: true },
-    {
-      field: "rentedDate",
-      headerName: "Borrowed date",
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "renterName",
-      headerName: "Customer's name",
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "dueDate",
-      headerName: "Due date",
-      sortable: true,
-      filter: true,
-    },
-  ]);
+  const fetchUsers = useCallback(() => {
+    fetch("http://localhost:8080/library/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data))
+      .catch((err) => console.error("Error fetching users:", err));
+  }, []);
 
-  const defaultColDef = {
-    flex: 1,
-    sortable: true,
-    filter: true,
-    resizable: true,
-  };
-
-  const fetchRentedBooks = () => {
+  const fetchRentedBooks = useCallback(() => {
     fetch("http://localhost:8080/library/rentedBooks")
       .then((response) => response.json())
       .then((data) => {
@@ -66,9 +46,9 @@ const HomePage = () => {
         setRowData(formattedData);
       })
       .catch((error) => console.error("Error fetching rented books:", error));
-  };
+  }, []);
 
-  const fetchAvailableBooks = () => {
+  const fetchAvailableBooks = useCallback(() => {
     fetch("http://localhost:8080/library/books?available=true")
       .then((response) => response.json())
       .then((data) => {
@@ -85,11 +65,10 @@ const HomePage = () => {
       .catch((error) =>
         console.error("Error fetching available books:", error)
       );
-  };
+  }, []);
 
   const handleReturnSubmit = async (e) => {
     e.preventDefault();
-
     if (!selectedBook) {
       alert("Please select a book to return.");
       return;
@@ -125,20 +104,12 @@ const HomePage = () => {
       alert("An error occurred while returning the book.");
     }
   };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "borrowNameInput") {
-      setEmail(value);
-    } else if (name === "borrowBookInput") {
-      setBook((prevBook) => ({ ...prevBook, borrowBookInput: value }));
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const queryParams = new URLSearchParams({
-        customerId: email,
+        customerId: customerId,
         bookId: book.borrowBookInput,
       }).toString();
 
@@ -149,10 +120,11 @@ const HomePage = () => {
 
       const message = await response.text();
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert(message);
         setBook({ borrowBookInput: "" });
-        setEmail("");
+        setCustomerId("");
+        fetchRentedBooks();
       } else if (response.status === 409) {
         alert(`Could not borrow book: ${message}`);
       } else {
@@ -163,6 +135,33 @@ const HomePage = () => {
       alert("Error. Failed to rent book.");
     }
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "borrowNameInput") {
+      setEmail(value);
+    } else if (name === "borrowBookInput") {
+      setBook((prevBook) => ({ ...prevBook, borrowBookInput: value }));
+    }
+  };
+
+  const defaultColDef = {
+    flex: 1,
+    sortable: true,
+    filter: true,
+    resizable: true,
+  };
+
+  const colDefs = [
+    { field: "title", headerName: "Title", sortable: true, filter: true },
+    { field: "renterName", headerName: "Customer's name", sortable: true, filter: true },
+    { field: "rentedDate", headerName: "Borrowed date", sortable: true, filter: true },
+    { field: "dueDate", headerName: "Due date", sortable: true, filter: true, cellStyle: (params) => {
+      const dueDate = new Date(params.value);
+      const today = new Date();
+      return dueDate < today ? { color: "red", fontWeight: "bold" } : {};
+    }},
+  ];
 
   return (
     <div className={styles.Home}>
@@ -220,17 +219,22 @@ const HomePage = () => {
                   htmlFor="borrowNameInput"
                   className={styles.borrowReturnText}
                 >
-                  Customer's Email:
+                  Customer:
                 </label>
-                <input
-                  type="text"
+                <select
                   id="borrowNameInput"
                   name="borrowNameInput"
-                  placeholder="Enter customer's email"
                   className={styles.inputField}
-                  value={email}
-                  onChange={handleInputChange}
-                />
+                  value={customerId}
+                  onChange={(e) => setCustomerId(e.target.value)}
+                >
+                  <option value="">Select a customer</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.name} ({user.email})
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className={styles.inputGroup}>
                 <label
@@ -238,20 +242,20 @@ const HomePage = () => {
                   className={styles.borrowReturnText}
                 >
                   Book Title:
-                <select
-                  id="borrowBookInput"
-                  name="borrowBookInput"
-                  className={styles.inputField}
-                  value={book.borrowBookInput}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select a book</option>
-                  {rowData2.map((book) => (
-                    <option key={book.id} value={book.id}>
-                      {book.title} - {book.author}
-                    </option>
-                  ))}
-                </select>
+                  <select
+                    id="borrowBookInput"
+                    name="borrowBookInput"
+                    className={styles.inputField}
+                    value={book.borrowBookInput}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select a book</option>
+                    {rowData2.map((book) => (
+                      <option key={book.id} value={book.id}>
+                        {book.title} - {book.author}
+                      </option>
+                    ))}
+                  </select>
                 </label>
                 <button type="submit" className={styles.buttonBorrow}>
                   <span className={styles.textButton}>Borrow</span>
@@ -263,9 +267,9 @@ const HomePage = () => {
           <section className={styles.containerReturn}>
             <form onSubmit={handleReturnSubmit} className={styles.returnForm}>
               <h3 className={styles.h3}>Return a Book</h3>
-              
+
               <div className={styles.inputGroup}>
-              <select
+                <select
                   id="book-select"
                   value={selectedBook?.bookId || ""}
                   className={styles.inputField}
@@ -288,9 +292,9 @@ const HomePage = () => {
                     <strong>Rented by:</strong> {selectedBook.renterName}
                   </p>
                 )}
-                   <button type="submit" className={styles.buttonBorrow}>
-                <span className={styles.textButton}>Return</span>
-              </button>
+                <button type="submit" className={styles.buttonBorrow}>
+                  <span className={styles.textButton}>Return</span>
+                </button>
               </div>
             </form>
           </section>
