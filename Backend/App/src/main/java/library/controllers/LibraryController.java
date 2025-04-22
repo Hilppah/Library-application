@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/library")
@@ -40,7 +42,16 @@ public class LibraryController {
 
     @PostMapping("/books")
     public ResponseEntity<?> addBook(@RequestBody LibraryBook book) {
-        System.out.println(book.getTitle());
+        if (book.getGenres() != null && book.getGenres().size() == 1) {
+            String raw = book.getGenres().get(0);
+            if (raw.contains(",")) {
+                List<String> genreList = Arrays.stream(raw.split(","))
+                        .map(String::trim)
+                        .collect(Collectors.toList());
+                book.setGenres(genreList);
+            }
+        }
+        System.out.println("Adding book: " + book.getTitle());
         return ResponseEntity.status(201).body(bookRepository.save(book));
     }
 

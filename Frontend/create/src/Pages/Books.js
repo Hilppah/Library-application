@@ -15,23 +15,41 @@ const BookPage = () => {
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/library/books")
-      .then((response) => response.json())
-      .then((data) => setRowData(data))
-      .catch((error) => console.error("Error fetching books:", error));
+    fetchBooks(setRowData);
   }, []);
-
+  
   useEffect(() => {
-    const filtered = rowData.filter((book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = filterBooks(rowData, searchTerm);
     setFilteredData(filtered);
   }, [searchTerm, rowData]);
 
+  const filterBooks = (books, searchTerm) => {
+    return books.filter((book) =>
+      book.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const fetchBooks = async (setRowData) => {
+    try {
+      const response = await fetch("http://localhost:8080/library/books");
+      const data = await response.json();
+      setRowData(data);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
+  
   const [colDefs] = useState([
     { field: "title", headerName: "Book Title", sortable: true, filter: true },
     { field: "author", headerName: "Author", sortable: true, filter: true },
-    { field: "genre", headerName: "Genre", sortable: true, filter: true },
+    {
+      field: "genres",
+      headerName: "Genres",
+      sortable: true,
+      filter: true,
+      valueFormatter: (params) =>
+        Array.isArray(params.value) ? params.value.join(", ") : "",
+    },
     {
       field: "year",
       headerName: "Publication year",
