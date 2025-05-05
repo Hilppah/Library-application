@@ -5,12 +5,18 @@ import { useState } from "react";
 
 const genres = [
   "Children's",
+  "Cookbook",
   "Fantasy",
+  "Graphic novel",
+  "Historical",
   "Historical fiction",
   "Horror",
+  "Humor",
+  "Mystery",
   "Non-fiction",
-  "Romace",
+  "Romance",
   "Sci-fi",
+  "Self-help",
   "Thriller",
   "Young adult",
 ];
