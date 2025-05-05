@@ -17,7 +17,7 @@ const BookPage = () => {
   useEffect(() => {
     fetchBooks(setRowData);
   }, []);
-  
+
   useEffect(() => {
     const filtered = filterBooks(rowData, searchTerm);
     setFilteredData(filtered);
@@ -38,7 +38,7 @@ const BookPage = () => {
       console.error("Error fetching books:", error);
     }
   };
-  
+
   const [colDefs] = useState([
     { field: "title", headerName: "Book Title", sortable: true, filter: true },
     { field: "author", headerName: "Author", sortable: true, filter: true },
@@ -91,7 +91,7 @@ const BookPage = () => {
           </Link>
           <Link to="/new-user">
             <button className={styles.buttonNav}>
-              <span className={styles.textButton}>Save new user</span>
+              <span className={styles.textButton}>Save a new user</span>
             </button>
           </Link>
         </Navbar.Brand>
