@@ -4,7 +4,7 @@ Basic application for ment to be used by library workers without library cards.
 ## Description
 This is a 4th year school project at OAMK. A website made using JavaScript and React for the application, and Java and Spring Boot for the backend. For the database I used NoSQL. 
 
-In it books can be borrowed using email and the tittle of the book. The borrowed books will be shown on the frontpage in a list. It will also display the due date and who rented it. Books and customers have their own pages where info of them is displayed. You can add a new customer from the "save a new customer" page. The customer needs an unique email. New books can be added on a similar page. You can add the tittle, author, genres and publication year to the books information. Books can be returned on the frontpage by the books tittle. It'll display who borrowed it above the return button.
+In the application books can be borrowed using email and the tittle of the book. The borrowed books will be shown on the frontpage in a list. It will also display the due date and who rented it. Books and customers have their own pages where info of them is displayed. You can add a new customer from the "save a new customer" page. The customer needs an unique email. New books can be added on a similar page. You can add the tittle, author, genres and publication year to the books information. Books can be returned on the frontpage by the books tittle. It'll display who borrowed it above the return button.
 
 ## Installation
 
